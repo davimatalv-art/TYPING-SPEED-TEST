@@ -1,0 +1,277 @@
+body {
+    background-color: #121212;
+    padding: 32px 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: "Heebo", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    
+}
+
+
+.topbar {
+    padding: 0 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+
+.personal-best {
+    font-size: 20px;
+    align-items: center;
+}
+
+.personal-best span {
+    line-height: 1;       
+  }
+
+.trofeu {
+    font-size: 14px;
+    transform: translateY(+2px);
+  }
+  
+.label {
+    font-weight: 400;
+    letter-spacing: 0,2px;
+    color: #949497;
+    font-size: 20px;
+
+  }
+  
+.personal-best .pb-value {
+    font-weight: 300;
+    color: #ffffff;
+  }
+
+  .value {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 98px;
+    margin-left: 5px;
+  }
+
+  .value-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  
+    padding: 6px 12px;
+    line-height: 1;
+  
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 7px;
+    background: transparent;
+
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+  
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .value-box:hover {
+    border-color: #2f8cff;
+    color: #2f8cff;
+  }
+
+  
+
+
+  .stats-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 100px;
+  }
+
+  .stats-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .stat {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .divider {
+    width: 1px;
+    height: 16px;
+    background: #333;
+  }
+
+  .linhamain {
+    width: 100%;
+    height: 1px;
+    width: calc(100vw - 210px);
+    background: rgba(255, 255, 255, 0.08);
+    border: none;
+  }
+
+
+  
+  .startbutton {
+    position: absolute;
+    left: 50%;
+    top: 50%;        
+    transform: translate(-50%, -50%);
+    padding: 14px 20px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    background-color: #2f8cff;
+    color: #ffffff;
+    line-height: 2;
+    width: 200px;
+    font-size: larger;
+    
+  }
+  
+  
+  .textblurred {
+    width: calc(100% - 64px);
+      margin: 32px 66px;
+      color: #9aa0a6;          
+      font-size: 32px;        
+      line-height: 1.4;
+      font-family: system-ui, sans-serif;
+      filter: blur(6px);
+      user-select: none;
+  }
+
+.textdisplay {
+    margin: 32px 66px;
+    width: auto;  
+    color: #9aa0a6;          
+    font-size: 32px;        
+    line-height: 1.4;
+    font-family: system-ui, sans-serif;
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+}
+
+.hiddeninput {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  height: 0;
+  width: 0;
+}
+
+/* cada letra vira um span */
+.char {
+  position: relative;
+}
+
+/* digitou certo */
+.char.correct {
+  color: #4caf50;
+}
+
+/* digitou errado */
+.char.wrong {
+  color: #f44336;
+  text-decoration: underline;
+  text-decoration-color: #f44336;
+}
+
+/* letra atual (a próxima) */
+.char.current {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  padding: 0 2px;
+}
+
+/* o "cursor" piscando */
+.char.current::after {
+  content: "";
+  position: absolute;
+  right: -2px;
+  top: 15%;
+  width: 2px;
+  height: 70%;
+  background: #2f8cff; /* pode trocar pra verde se quiser */
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+
+.attribution a {
+    color: hsl(228, 45%, 44%);
+}
+
+
+.atribuicoes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: bisque;
+    width: 100%;
+    margin-top: auto;
+    font-size: 11px; 
+    text-align: center;
+}
+
+
+
+.futzin {
+    position: fixed;
+    bottom: 16px;          
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;  
+}
+
+/* .test-area {
+  position: relative;
+  max-width: 900px;
+  margin: 40px auto;
+}
+
+.text-display {
+  background: #1a1a1a;
+  padding: 28px;
+  border-radius: 16px;
+  line-height: 1.6;
+  min-height: 140px;
+}
+
+.blurred {
+  filter: blur(6px);
+  user-select: none;
+}
+
+.start-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 14px 20px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+}
+
+.hidden-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  height: 0;
+  width: 0;
+} */
