@@ -8,7 +8,6 @@ const accEl = values[1];
 const timeEl = values[2];
 
 const targetText = textDisplay.textContent.replace(/\s+/g, " ").trim();
-
 const TEST_DURATION = 60;
 
 let startTime = null;
@@ -23,7 +22,6 @@ function formatTime(seconds) {
 function render(typed, showCurrent = true) {
   typed = typed || "";
   let html = "";
-
 
   for (let i = 0; i < targetText.length; i++) {
     const targetChar = targetText[i];
@@ -51,15 +49,11 @@ function calcStats(typed) {
   const targetLen = targetText.length;
 
   let correct = 0;
-  let wrong = 0;
 
   const compareLen = Math.min(typedLen, targetLen);
   for (let i = 0; i < compareLen; i++) {
     if (typed[i] === targetText[i]) correct++;
-    else wrong++;
   }
-
-  if (typedLen > targetLen) wrong += (typedLen - targetLen);
 
   const accuracy = typedLen === 0 ? 100 : (correct / typedLen) * 100;
 
@@ -78,7 +72,6 @@ function updateUI(typed) {
 }
 
 function resetTestUI() {
-  // volta estado “pré-teste”
   textDisplay.classList.add("textblurred");
   textDisplay.classList.remove("textdisplay");
 
@@ -91,42 +84,41 @@ function resetTestUI() {
   timeLeft = TEST_DURATION;
   wpmEl.textContent = "0";
   accEl.textContent = "100%";
-  timeEl.textContent = formatTime(TEST_DURATION);
+  timeEl.textContent = formatTime(timeLeft);
 
-  // mostra o texto “limpo” com cursor na 1ª letra (ainda sem rodar)
   render("", true);
 }
 
 function endTest() {
-  function endTest() {
-    isRunning = false;
-    clearInterval(timerId);
-    timerId = null;
-  
-    hiddenInput.disabled = true;
-    hiddenInput.blur();
-  
-    // tira cursor e deixa o texto final renderizado
-    render(hiddenInput.value, false);
-  
-    // VOLTA O BLUR (garantido)
-    textDisplay.classList.add("textblurred");
-    textDisplay.classList.remove("textdisplay");
-  
-    startButton.style.display = "inline-block";
-    startButton.textContent = "Go Again";
-    timeLeft = 0;
-    timeEl.textContent = formatTime(0);
-  }
+  if (!isRunning) return; // evita chamar duas vezes
+  isRunning = false;
+
+  clearInterval(timerId);
+  timerId = null;
+
+  hiddenInput.disabled = true;
+  hiddenInput.blur();
+
+  // tira cursor e deixa o texto final renderizado
+  render(hiddenInput.value, false);
+
+  // volta blur
+  textDisplay.classList.add("textblurred");
+  textDisplay.classList.remove("textdisplay");
+
+  // trava tempo no 0
+  timeLeft = 0;
+  timeEl.textContent = formatTime(0);
+
+  startButton.style.display = "inline-block";
+  startButton.textContent = "Go Again";
 }
 
 function startTest() {
-  // visual
   textDisplay.classList.remove("textblurred");
   textDisplay.classList.add("textdisplay");
   startButton.style.display = "none";
 
-  // reset estado
   hiddenInput.disabled = false;
   hiddenInput.value = "";
   hiddenInput.focus();
@@ -140,19 +132,15 @@ function startTest() {
 
   clearInterval(timerId);
   timerId = setInterval(() => {
-    timeLeft--;
+    timeLeft = Math.max(0, timeLeft - 1);
     timeEl.textContent = formatTime(timeLeft);
 
-    if (timeLeft <= 0) endTest();
+    if (timeLeft === 0) endTest();
   }, 1000);
 }
 
-// clique serve tanto pra Start quanto pra Go Again
 startButton.addEventListener("click", () => {
-  // se tá mostrando “Go Again”, reseta antes
-  if (startButton.textContent === "Go Again") {
-    resetTestUI();
-  }
+  if (startButton.textContent === "Go Again") resetTestUI();
   startTest();
 });
 
@@ -166,5 +154,4 @@ hiddenInput.addEventListener("input", () => {
   if (typed.length >= targetText.length) endTest();
 });
 
-// inicializa a tela certinha
 resetTestUI();
